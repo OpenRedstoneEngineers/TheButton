@@ -1,0 +1,8 @@
+name: TheButton
+version: 1.0
+main: org.openredstone.button.TheButton
+api-version: 1.17
+commands:
+  thebutton:
+    description: View or manage TheButton
+    usage: /<command> <subcommand>

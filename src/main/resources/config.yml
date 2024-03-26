@@ -1,0 +1,109 @@
+button:
+  world: "world"
+  x: 1
+  y: 2
+  z: 3
+actionProbability: 0.02
+joinMessage: true
+actions:
+  kick: true
+  kill: true
+  tp: true
+  boat: true
+  smite: true
+  night: true
+  storm: true
+  potion: true
+  gamemode: true
+  fireworks: true
+  levitation: true
+statements:
+  button:
+    - "... First of all, How dare?"
+    - "wow"
+    - "/ban LordDecapo?"
+    - "/ban LordDecapo"
+    - "/ban Nickster258????? .... nah"
+    - "Did you really think that was a good idea?"
+    - "Oops! Did I do that?"
+    - "Warning: Button presses are recorded for quality assurance."
+    - "Congratulations, you've won... another press!"
+    - "This button has been pressed 39874 times. You're not special."
+    - "Initiating self-destruct sequence... Just kidding! Or am I?"
+    - "Please wait, connecting you to the realm of absurdity."
+    - "Hey! That tickles!"
+    - "Do not press this button again. (Please do)"
+    - "Ejecting player in 3... 2... 1... Error: Ejection failed."
+    - "Unauthorized button press detected. Deploying countermeasures."
+    - "Now recalibrating the universe's karma balance. Thank you."
+    - "Summoning the Button Guardians. Please stand by."
+    - "404: Consequence not found. Try again?"
+    - "Congratulations! You've unleashed chaos theory."
+    - "The button remembers. It will return the favor."
+    - "Engaging hyperdrive in 3... 2... Oops, wrong button."
+    - "This button press has been sponsored by 'Random Acts of Chaos'."
+    - "You have chosen... wisely? Or perhaps not."
+    - "Welcome to the Button Lottery. Today's prize: A mystery!"
+    - "Warning: The next press might actually do something."
+    - "This button is powered by your curiosity. And possibly magic."
+    - "Be careful, the button is starting to get annoyed."
+    - "If this button could talk... Oh wait, it can."
+  enterTimeout:
+    - "You have been put in timeout!!"
+    - "Bro... I'm sending you to the chill corner"
+    - "... You good? Get a timeout"
+    - ":expressionless:, timeout time"
+    - "Whoa there, Speedy Gonzales! Take a breather."
+    - "Timeout initiated. It's not you, it's me... Actually, it's you."
+    - "Engaging chill mode. Please stand by."
+    - "Too fast, too curious. Enjoy your timeout!"
+    - "You've been too button-happy. Time for a little break."
+    - "Rapid button pressing detected. Deploying mandatory relaxation period."
+    - "Hit pause on your button adventure. Timeout for you!"
+    - "Looks like someone's got an itchy button finger. Relaxation protocol activated."
+    - "You've earned a free trip to the land of patience. Enjoy your stay!"
+    - "Button smashing level: Expert. Chill level: Needs improvement."
+    - "Taking a quick timeout to appreciate the finer things in life... like not pressing the button."
+    - "You're pressing that button like there's no tomorrow! Timeout for a bit of reflection."
+    - "In the pursuit of balance, we present to you: a timeout."
+    - "Timeout! Let's take a moment to think about what we've done."
+    - "The Button Gods demand a moment of silence. And by silence, I mean timeout."
+    - "Whoops! You've activated the secret timeout feature. Enjoy!"
+    - "Going too fast there! Let's take a timeout to smell the roses."
+    - "The button feels neglected when you press it too fast. Timeout for contemplation."
+    - "Haste makes waste, and in this case, a timeout."
+    - "You've been so eager! But even heroes need a break. Timeout time."
+    - "Rapid pressing detected. Initiating cool down mode... now."
+    - "Timeout! This is the button's way of saying, 'Let's just be friends.'"
+    - "Ah, ah, ah! Too much enthusiasm. Sit this one out."
+    - "Congratulations! You've unlocked the timeout achievement."
+    - "Your enthusiasm is noted. And so is your timeout."
+  inTimeout:
+    - "You're in timeout already, chill"
+    - "Wow you're too much"
+    - "Don't you have redstone to do?"
+    - "Patience, young grasshopper. You're still in the timeout zone."
+    - "Trying to press the button again? The audacity!"
+    - "Timeout still in progress. How about we don't and say we did?"
+    - "Still in timeout! Go take a lap around the block... literally."
+    - "The button is on a break from you. Please wait."
+    - "You're still in the chill zone. Contemplate the meaning of 'wait'."
+    - "Timeout mode: Still active. Your enthusiasm: Noted and admired."
+    - "In timeout and still pressing? You're an overachiever."
+    - "Your timeout isn't over yet. How about planning your next button press?"
+    - "Button pressing is currently off-limits. Reflect on your eagerness."
+    - "Still in the penalty box! Maybe practice your patience skills?"
+    - "The button says you're still in timeout. Try meditating?"
+    - "Timeout ongoing. Maybe sort your inventory in the meantime?"
+    - "The timeout continues. Perhaps plot world domination instead?"
+    - "Button interaction is currently paused. Please stand by."
+    - "You're eager, I get it. But you're still in timeout, buddy."
+    - "Time's still ticking on your timeout. Dream of buttons."
+    - "In the midst of a timeout. Plan your next non-button-pressing move."
+    - "Timeout in session. Try not to think about the button."
+    - "Your timeout adventure continues. Enjoy the scenery!"
+    - "Hey, still in timeout over here. Maybe count some sheep?"
+    - "Button privileges suspended. Enjoy your brief button-free vacation."
+    - "Patience is a virtue, and your timeout is the test."
+    - "Still serving your timeout sentence. Think about what you've done... or just relax."
+    - "Timeout's not over yet. Time for a zen moment."
