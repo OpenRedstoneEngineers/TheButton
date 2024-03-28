@@ -1,5 +1,8 @@
 package org.openredstone.button
 
+import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
 import org.bukkit.FireworkEffect.Type
 import org.bukkit.command.Command
@@ -27,6 +30,9 @@ fun Double.roll() = Random.nextDouble() <= this
 fun Location.centerOffset() = this.clone().add(Vector(0.5, 0.5, 0.5))
 
 fun randomRgbColor() = Color.fromRGB((0..255).random(), (0..255).random(), (0..255).random())
+
+fun String.colorify() =
+    TextComponent(this).apply { color = ChatColor.values().random() }
 
 val availablePotionEffects = listOf(
     Pair(PotionEffectType.SPEED, 255),
@@ -128,18 +134,22 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
 
     private fun doAction(event: PlayerInteractEvent) {
         if (!actionProbability.roll()) {
-            event.player.sendMessage(buttonPressStatements.random())
+            event.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, buttonPressStatements.random().colorify())
             return
         }
         val availableActions = configActions.filter { it.value }.keys.toList() // Filter available actions
         when (availableActions.random()) {
             "kick" -> {
-                event.player.kickPlayer("${event.player.displayName} pressed the button")
-                this.server.broadcastMessage("${event.player.displayName} pressed the button")
+                event.player.sendTitle("Bye", "(you asked for it)")
+                server.scheduler.scheduleSyncDelayedTask(this, {
+                    event.player.kickPlayer("${event.player.displayName} pressed the button")
+                }, 20 * 3)
             }
             "kill" -> {
-                event.player.health = 0.0
-                event.player.sendMessage("RIP")
+                event.player.sendTitle("RIP", "")
+                server.scheduler.scheduleSyncDelayedTask(this, {
+                    event.player.health = 0.0
+                }, 20)
             }
             "tp" -> {
                 // TODO the range.random() seems to only produce positive numbers... ?
@@ -148,34 +158,34 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     (buttonLocation.y + (-50..200).random()).coerceIn(-63.0, 319.0),
                     buttonLocation.z + (-300..300).random()
                 )))
-                event.player.sendMessage("yyeeEEEEEEEet")
+                event.player.sendTitle("yyeeEEEEEEEet", "")
             }
             "boat" -> {
                 val boatLoc = event.player.location
                 val world = event.player.world
                 val boat = world.spawnEntity(boatLoc, EntityType.BOAT)
                 boat.addPassenger(event.player)
-                event.player.sendMessage("You're better off boating...")
+                event.player.sendTitle("", "You're better off boating...")
             }
             "smite" -> {
                 val playerLoc = event.player.location
                 playerLoc.world?.strikeLightning(playerLoc)
-                event.player.sendMessage("You have been smote (apparently this is the proper past tense usage??)")
+                event.player.sendTitle("Get smote", "(apparently this is the proper past tense??)")
             }
             "night" -> {
                 event.player.setPlayerTime(13000, false)
-                event.player.sendMessage("You should probably go to sleep, take some rest")
+                event.player.sendTitle("Nightnight", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerTime(6000, false)
-                    event.player.sendMessage("Ok fine, day time")
+                    event.player.sendTitle("", "Ok fine, day time")
                 }, 20 * 30)
             }
             "storm" -> {
                 event.player.setPlayerWeather(WeatherType.DOWNFALL)
-                event.player.sendMessage("Mood killer")
+                event.player.sendTitle("Mood killer", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerWeather(WeatherType.CLEAR)
-                    event.player.sendMessage("Guess you can't have a storm forever...")
+                    event.player.sendTitle("", "Guess you can't have a storm forever...")
                 }, 20 * 30)
             }
             "potion" -> {
@@ -186,13 +196,13 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     chosenPotionEffect.second
                 ))
                 val funny = listOf("smh", "xd", "get rekt").random()
-                event.player.sendMessage("Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
+                event.player.sendTitle("", "Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
             }
             "gamemode" -> {
                 val gameModes = GameMode.values().filter { it != event.player.gameMode }
                 val chosenGameMode = gameModes.random()
                 event.player.gameMode = chosenGameMode
-                event.player.sendMessage("You have been banished to ${chosenGameMode.name.lowercase()} mode")
+                event.player.sendTitle(chosenGameMode.name.lowercase(), "You have been banished to ${chosenGameMode.name.lowercase()} mode")
             }
             "fireworks" -> {
                 val firework = buttonLocation.world!!.spawnEntity(buttonLocation.centerOffset(), EntityType.FIREWORK) as Firework
@@ -210,7 +220,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     fireworkMeta.addEffect(fireworkEffect.build())
                 }
                 firework.fireworkMeta = fireworkMeta
-                event.player.sendMessage("Zoomzoom")
+                event.player.sendTitle("Zoomzoom", "")
             }
             "levitation" -> {
                 event.player.addPotionEffect(PotionEffect(
@@ -218,7 +228,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     (60..100).random(),
                     127 // any more and it doesn't have intended effect
                 ))
-                event.player.sendMessage("To infinity, and beyond!")
+                event.player.sendTitle("To infinity...", "...and beyond!")
             }
         }
     }
@@ -229,12 +239,17 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
         limitedLinkedList.add(now)
         if (event.player.uniqueId in timeout &&
             timeout[event.player.uniqueId]!!.plusSeconds(60) >= now) {
-            event.player.sendMessage(inTimeoutStatements.random())
+            event.player.spigot().sendMessage(
+                ChatMessageType.ACTION_BAR, inTimeoutStatements.random().colorify()
+            )
             return
         }
         if (limitedLinkedList.full &&
             limitedLinkedList.first.plusSeconds(2) > limitedLinkedList.last) {
-            event.player.sendMessage(enterTimeoutStatements.random())
+            event.player.sendTitle("Timeout time", "(this doesn't last long... or does it?)")
+            event.player.spigot().sendMessage(
+                ChatMessageType.ACTION_BAR, enterTimeoutStatements.random().colorify()
+            )
             timeout[event.player.uniqueId] = now
             return
         }
