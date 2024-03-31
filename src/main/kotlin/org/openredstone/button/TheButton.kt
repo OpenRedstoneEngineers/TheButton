@@ -167,11 +167,10 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                 }, 20)
             }
             "tp" -> {
-                // TODO the range.random() seems to only produce positive numbers... ?
                 event.player.teleport(buttonLocation.clone().add(Vector(
-                    buttonLocation.x + (-300..300).random(),
-                    (buttonLocation.y + (-50..200).random()).coerceIn(-63.0, 319.0),
-                    buttonLocation.z + (-300..300).random()
+                    (-300..300).random(),
+                    (0..200).random().coerceIn(-63, 319),
+                    (-300..300).random()
                 )))
                 event.player.shortTitle("yyeeEEEEEEEet", "")
             }
@@ -222,7 +221,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
             "fireworks" -> {
                 val firework = buttonLocation.world!!.spawnEntity(buttonLocation.centerOffset(), EntityType.FIREWORK) as Firework
                 val fireworkMeta = firework.fireworkMeta
-                fireworkMeta.power = 2
+                fireworkMeta.power = 1
                 for (i in 4..(5..10).random()) {
                     val fireworkEffect = FireworkEffect.builder()
                     fireworkEffect.apply {
