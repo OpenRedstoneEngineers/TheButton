@@ -5,6 +5,7 @@ button:
   z: 3
 actionProbability: 0.02
 joinMessage: true
+kickcapo: true
 actions:
   kick: true
   kill: true

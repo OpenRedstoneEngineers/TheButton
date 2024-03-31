@@ -34,6 +34,9 @@ fun randomRgbColor() = Color.fromRGB((0..255).random(), (0..255).random(), (0..2
 fun String.colorify() =
     TextComponent(this).apply { color = ChatColor.values().random() }
 
+fun Player.shortTitle(title: String?, subtitle: String?, fadeIn: Boolean = true, fadeOut: Boolean = true) =
+    this.sendTitle(title, subtitle, if (fadeIn) 10 else 0, 50, if (fadeOut) 20 else 0)
+
 val availablePotionEffects = listOf(
     Pair(PotionEffectType.SPEED, 255),
     Pair(PotionEffectType.BLINDNESS, 255),
@@ -68,6 +71,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
     private val presses = mutableMapOf<UUID, LimitedLinkedList<Instant>>()
     private val timeout = mutableMapOf<UUID, Instant>()
     private val configActions = mutableMapOf<String, Boolean>()
+    private var kickCapoAction = false
 
     override fun onEnable() {
         saveDefaultConfig()
@@ -126,6 +130,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
             enterTimeoutStatements = getStringList("statements.enterTimeout")
             inTimeoutStatements = getStringList("statements.inTimeout")
             actionProbability = getDouble("actionProbability")
+            kickCapoAction = getBoolean("kickcapo")
             getConfigurationSection("actions")?.getKeys(false)?.forEach { key ->
                 configActions[key] = getBoolean("actions.$key")
             }
@@ -135,6 +140,16 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
     private fun doAction(event: PlayerInteractEvent) {
         if (!actionProbability.roll()) {
             event.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, buttonPressStatements.random().colorify())
+            return
+        }
+        if (kickCapoAction && 0.001.roll()) {
+            val capo = server.getPlayer("LordDecapo")
+            val subtitle = if (capo == null) "Oops... capo was offline" else "dang you actually did it, bye capo"
+            event.player.shortTitle("/kick LordDecapo", "")
+            server.scheduler.scheduleSyncDelayedTask(this, {
+                capo?.kickPlayer("${event.player.displayName} pressed the button")
+                event.player.shortTitle("/kick LordDecapo", subtitle, false)
+            }, 20 * 2)
             return
         }
         val availableActions = configActions.filter { it.value }.keys.toList() // Filter available actions
