@@ -155,13 +155,13 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
         val availableActions = configActions.filter { it.value }.keys.toList() // Filter available actions
         when (availableActions.random()) {
             "kick" -> {
-                event.player.sendTitle("Bye", "(you asked for it)")
+                event.player.shortTitle("Bye", "(you asked for it)", false)
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.kickPlayer("${event.player.displayName} pressed the button")
                 }, 20 * 3)
             }
             "kill" -> {
-                event.player.sendTitle("RIP", "")
+                event.player.shortTitle("RIP", "", false)
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.health = 0.0
                 }, 20)
@@ -173,34 +173,34 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     (buttonLocation.y + (-50..200).random()).coerceIn(-63.0, 319.0),
                     buttonLocation.z + (-300..300).random()
                 )))
-                event.player.sendTitle("yyeeEEEEEEEet", "")
+                event.player.shortTitle("yyeeEEEEEEEet", "")
             }
             "boat" -> {
                 val boatLoc = event.player.location
                 val world = event.player.world
                 val boat = world.spawnEntity(boatLoc, EntityType.BOAT)
                 boat.addPassenger(event.player)
-                event.player.sendTitle("", "You're better off boating...")
+                event.player.shortTitle("", "You're better off boating...")
             }
             "smite" -> {
                 val playerLoc = event.player.location
                 playerLoc.world?.strikeLightning(playerLoc)
-                event.player.sendTitle("Get smote", "(apparently this is the proper past tense??)")
+                event.player.shortTitle("Get smote", "(apparently this is the proper past tense??)")
             }
             "night" -> {
                 event.player.setPlayerTime(13000, false)
-                event.player.sendTitle("Nightnight", "")
+                event.player.shortTitle("Nightnight", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerTime(6000, false)
-                    event.player.sendTitle("", "Ok fine, day time")
+                    event.player.shortTitle("", "Ok fine, day time")
                 }, 20 * 30)
             }
             "storm" -> {
                 event.player.setPlayerWeather(WeatherType.DOWNFALL)
-                event.player.sendTitle("Mood killer", "")
+                event.player.shortTitle("Mood killer", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerWeather(WeatherType.CLEAR)
-                    event.player.sendTitle("", "Guess you can't have a storm forever...")
+                    event.player.shortTitle("", "Guess you can't have a storm forever...")
                 }, 20 * 30)
             }
             "potion" -> {
@@ -211,13 +211,13 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     chosenPotionEffect.second
                 ))
                 val funny = listOf("smh", "xd", "get rekt").random()
-                event.player.sendTitle("", "Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
+                event.player.shortTitle("", "Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
             }
             "gamemode" -> {
                 val gameModes = GameMode.values().filter { it != event.player.gameMode }
                 val chosenGameMode = gameModes.random()
                 event.player.gameMode = chosenGameMode
-                event.player.sendTitle(chosenGameMode.name.lowercase(), "You have been banished to ${chosenGameMode.name.lowercase()} mode")
+                event.player.shortTitle(chosenGameMode.name.lowercase(), "You have been banished to ${chosenGameMode.name.lowercase()} mode")
             }
             "fireworks" -> {
                 val firework = buttonLocation.world!!.spawnEntity(buttonLocation.centerOffset(), EntityType.FIREWORK) as Firework
@@ -235,7 +235,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     fireworkMeta.addEffect(fireworkEffect.build())
                 }
                 firework.fireworkMeta = fireworkMeta
-                event.player.sendTitle("Zoomzoom", "")
+                event.player.shortTitle("Zoomzoom", "")
             }
             "levitation" -> {
                 event.player.addPotionEffect(PotionEffect(
@@ -243,7 +243,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     (60..100).random(),
                     127 // any more and it doesn't have intended effect
                 ))
-                event.player.sendTitle("To infinity...", "...and beyond!")
+                event.player.shortTitle("To infinity...", "...and beyond!")
             }
         }
     }
