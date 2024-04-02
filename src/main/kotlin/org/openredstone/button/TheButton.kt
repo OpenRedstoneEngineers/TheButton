@@ -82,6 +82,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
         logger.info("Enter Timeout statements: $enterTimeoutStatements")
         logger.info("In Timeout statements: $inTimeoutStatements")
         logger.info("Current actions: $configActions")
+        logger.info("Button: $buttonLocation")
         logger.info("Loaded!")
     }
 

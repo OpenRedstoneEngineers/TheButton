@@ -2,6 +2,7 @@ name: TheButton
 version: 1.0
 main: org.openredstone.button.TheButton
 api-version: 1.17
+softdepend: [CoreProtect]
 commands:
   thebutton:
     description: View or manage TheButton
