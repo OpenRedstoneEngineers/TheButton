@@ -179,7 +179,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                 val world = event.player.world
                 val boat = world.spawnEntity(boatLoc, EntityType.BOAT)
                 boat.addPassenger(event.player)
-                event.player.shortTitle("", "You're better off boating...")
+                event.player.shortTitle("boat time!", "You're better off boating...")
             }
             "smite" -> {
                 val playerLoc = event.player.location
@@ -191,7 +191,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                 event.player.shortTitle("Nightnight", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerTime(6000, false)
-                    event.player.shortTitle("", "Ok fine, day time")
+                    event.player.shortTitle("ok fine,", "day time")
                 }, 20 * 30)
             }
             "storm" -> {
@@ -199,7 +199,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                 event.player.shortTitle("Mood killer", "")
                 server.scheduler.scheduleSyncDelayedTask(this, {
                     event.player.setPlayerWeather(WeatherType.CLEAR)
-                    event.player.shortTitle("", "Guess you can't have a storm forever...")
+                    event.player.shortTitle("/weather sun", "Guess you can't have a storm forever...")
                 }, 20 * 30)
             }
             "potion" -> {
@@ -210,7 +210,7 @@ class TheButton : JavaPlugin(), Listener, CommandExecutor {
                     chosenPotionEffect.second
                 ))
                 val funny = listOf("smh", "xd", "get rekt").random()
-                event.player.shortTitle("", "Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
+                event.player.shortTitle(chosenPotionEffect.first.name, "Enjoy some ${chosenPotionEffect.first.name.lowercase()}, $funny")
             }
             "gamemode" -> {
                 val gameModes = GameMode.values().filter { it != event.player.gameMode }
